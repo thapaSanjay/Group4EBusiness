@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Product Management</title>
+</h:head>
+
+<h:body>
+
+    <h1>Product Management</h1>
+
+    <h:form id="productForm">
+
+        <h:messages style="color:red" />
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="Product Type:" />
+            <h:selectOneMenu value="#{productController.productType}" required="true">
+                <f:selectItem itemLabel="Select Type" itemValue="" />
+                <f:selectItem itemLabel="Laptop" itemValue="Laptop" />
+                <f:selectItem itemLabel="Smartphone" itemValue="Smartphone" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="Brand:" />
+            <h:inputText value="#{productController.brand}" required="true" />
+
+            <h:outputLabel value="Model:" />
+            <h:inputText value="#{productController.model}" required="true" />
+
+            <h:outputLabel value="Display Size:" />
+            <h:inputText value="#{productController.displaySize}" required="true" />
+
+            <h:outputLabel value="Weight:" />
+            <h:inputText value="#{productController.weight}" required="true" />
+
+            <h:outputLabel value="Operating System:" />
+            <h:inputText value="#{productController.operatingSystem}" />
+
+            <h:outputLabel value="Camera:" />
+            <h:inputText value="#{productController.camera}" />
+
+            <h:outputLabel value="WiFi:" />
+            <h:inputText value="#{productController.wifi}" />
+
+            <h:outputLabel value="Stock Quantity:" />
+            <h:inputText value="#{productController.stockQuantity}" required="true" />
+
+            <h:outputLabel value="Network Interface:" />
+            <h:inputText value="#{productController.networkInterface}" />
+
+            <h:outputLabel value="Hard Drive:" />
+            <h:inputText value="#{productController.hardDrive}" />
+
+            <h:outputLabel value="Optical Drive:" />
+            <h:inputText value="#{productController.opticalDrive}" />
+
+            <h:outputLabel value="Cellular Connectivity:" />
+            <h:inputText value="#{productController.cellularConnectivity}" />
+
+            <h:outputLabel value="Location:" />
+            <h:inputText value="#{productController.location}" />
+
+            <h:outputLabel value="SIM Card:" />
+            <h:inputText value="#{productController.simCard}" />
+
+        </h:panelGrid>
+
+        <br />
+
+        <h:commandButton value="Create Product"
+                         action="#{productController.createProduct}" />
+
+    </h:form>
+
+    <hr />
+
+    <h2>Product Stock</h2>
+
+    <h:dataTable value="#{productController.products}"
+                 var="product"
+                 border="1">
+
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            <h:outputText value="#{product.id}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Brand</f:facet>
+            <h:outputText value="#{product.brand}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Model</f:facet>
+            <h:outputText value="#{product.model}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">OS</f:facet>
+            <h:outputText value="#{product.operatingSystem}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Stock</f:facet>
+            <h:outputText value="#{product.stockQuantity}" />
+        </h:column>
+
+    </h:dataTable>
+
+</h:body>
+</html>
