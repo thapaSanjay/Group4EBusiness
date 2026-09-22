@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Customer Management</title>
+</h:head>
+
+<h:body>
+
+    <h1>Customer Management</h1>
+
+    <h:form id="customerForm">
+
+        <h:messages style="color:red" />
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="First Name:" />
+            <h:inputText value="#{customerController.firstName}"
+                         required="true"
+                         requiredMessage="First name is required." />
+
+            <h:outputLabel value="Last Name:" />
+            <h:inputText value="#{customerController.lastName}"
+                         required="true"
+                         requiredMessage="Last name is required." />
+
+            <h:outputLabel value="Email:" />
+            <h:inputText value="#{customerController.email}"
+                         required="true"
+                         requiredMessage="Email is required." />
+
+            <h:outputLabel value="Phone:" />
+            <h:inputText value="#{customerController.phone}"
+                         required="true"
+                         requiredMessage="Phone is required." />
+
+            <h:outputLabel value="Address:" />
+            <h:inputText value="#{customerController.address}"
+                         required="true"
+                         requiredMessage="Address is required." />
+
+        </h:panelGrid>
+
+        <br />
+
+        <h:commandButton value="Create Customer"
+                         action="#{customerController.createCustomer}" />
+
+    </h:form>
+
+    <hr />
+
+    <h2>Customer List</h2>
+
+    <h:dataTable value="#{customerController.customers}"
+                 var="customer"
+                 border="1">
+
+        <h:column>
+            <f:facet name="header">ID</f:facet>
+            <h:outputText value="#{customer.id}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">First Name</f:facet>
+            <h:outputText value="#{customer.firstName}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Last Name</f:facet>
+            <h:outputText value="#{customer.lastName}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Email</f:facet>
+            <h:outputText value="#{customer.email}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Phone</f:facet>
+            <h:outputText value="#{customer.phone}" />
+        </h:column>
+
+        <h:column>
+            <f:facet name="header">Address</f:facet>
+            <h:outputText value="#{customer.address}" />
+        </h:column>
+
+    </h:dataTable>
+
+</h:body>
+</html>
