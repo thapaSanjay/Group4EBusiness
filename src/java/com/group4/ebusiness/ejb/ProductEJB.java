@@ -38,4 +38,16 @@ public class ProductEJB {
             em.remove(product);
         }
     }
+    
+    public List<Product> searchProducts(String keyword) {
+
+        return em.createQuery(
+                "SELECT p FROM Product p "
+                + "WHERE LOWER(p.brand) LIKE LOWER(:keyword) "
+                + "OR LOWER(p.model) LIKE LOWER(:keyword)",
+                Product.class
+        )
+        .setParameter("keyword", "%" + keyword + "%")
+        .getResultList();
+    }
 }

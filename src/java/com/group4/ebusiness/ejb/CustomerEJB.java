@@ -38,4 +38,17 @@ public class CustomerEJB {
             em.remove(customer);
         }
     }
+    
+    public List<Customer> searchCustomers(String keyword) {
+
+        return em.createQuery(
+                "SELECT c FROM Customer c "
+                + "WHERE LOWER(c.firstName) LIKE LOWER(:keyword) "
+                + "OR LOWER(c.lastName) LIKE LOWER(:keyword) "
+                + "OR LOWER(c.email) LIKE LOWER(:keyword)",
+                Customer.class
+        )
+        .setParameter("keyword", "%" + keyword + "%")
+        .getResultList();
+    }
 }
