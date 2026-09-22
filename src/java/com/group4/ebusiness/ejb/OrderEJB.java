@@ -74,4 +74,13 @@ public class OrderEJB {
             em.remove(order);
         }
     }
+    
+    public CustomerOrder searchOrder(Long id) {
+
+        if (id == null) {
+            return null;
+        }
+
+        return em.find(CustomerOrder.class, id);
+    }
 }
