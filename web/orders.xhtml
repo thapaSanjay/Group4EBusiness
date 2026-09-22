@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Order Management</title>
+</h:head>
+
+<h:body>
+
+    <h1>Order Management</h1>
+
+    <h:form id="orderForm">
+
+        <h:messages style="color:red" />
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="Customer:" />
+            <h:selectOneMenu value="#{orderController.customerId}" required="true">
+                <f:selectItem itemLabel="Select Customer" itemValue="" />
+                <f:selectItems value="#{orderController.customers}"
+                               var="customer"
+                               itemValue="#{customer.id}"
+                               itemLabel="#{customer.firstName} #{customer.lastName}" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="Product:" />
+            <h:selectOneMenu value="#{orderController.productId}" required="true">
+                <f:selectItem itemLabel="Select Product" itemValue="" />
+                <f:selectItems value="#{orderController.products}"
+                               var="product"
+                               itemValue="#{product.id}"
+                               itemLabel="#{product.brand} #{product.model} - Stock: #{product.stockQuantity}" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="Quantity:" />
+            <h:inputText value="#{orderController.quantity}"
+                         required="true"
+                         requiredMessage="Quantity is required." />
+
+        </h:panelGrid>
+
+        <br />
+
+        <h:commandButton value="Create Order"
+                         action="#{orderController.createOrder}" />
+
+    </h:form>
+
+    <hr />
+
+    <h2>Order List</h2>
+
+    <h:form id="orderListForm">
+
+        <h:dataTable value="#{orderController.orders}"
+                     var="order"
+                     border="1">
+
+            <h:column>
+                <f:facet name="header">Order ID</f:facet>
+                <h:outputText value="#{order.id}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Customer</f:facet>
+                <h:outputText value="#{order.customer.firstName} #{order.customer.lastName}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Product</f:facet>
+                <h:outputText value="#{order.product.brand} #{order.product.model}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Quantity</f:facet>
+                <h:outputText value="#{order.quantity}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Order Date</f:facet>
+                <h:outputText value="#{order.orderDate}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Action</f:facet>
+
+                <h:commandButton value="Delete"
+                                 action="#{orderController.deleteOrder(order.id)}"
+                                 onclick="return confirm('Delete this order?');" />
+
+            </h:column>
+
+        </h:dataTable>
+
+    </h:form>
+
+</h:body>
+</html>
