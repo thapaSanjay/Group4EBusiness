@@ -51,4 +51,15 @@ public class CustomerEJB {
         .setParameter("keyword", "%" + keyword + "%")
         .getResultList();
     }
+    
+    public Customer findCustomerWithOrders(Long id) {
+        return em.createQuery(
+                "SELECT DISTINCT c FROM Customer c "
+                + "LEFT JOIN FETCH c.orders "
+                + "WHERE c.id = :id",
+                Customer.class
+        )
+        .setParameter("id", id)
+        .getSingleResult();
+    }
 }

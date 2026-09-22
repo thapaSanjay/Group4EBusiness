@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Customer Details</title>
+</h:head>
+
+<h:body>
+
+    <h1>Customer Details</h1>
+
+    <h:form>
+
+        <h:outputLabel value="Customer ID:" />
+        <h:inputText value="#{customerDetailsController.customerId}" />
+
+        <h:commandButton value="View Details"
+                         action="#{customerDetailsController.loadCustomer}" />
+
+    </h:form>
+
+    <h:panelGroup rendered="#{customerDetailsController.customer != null}">
+
+        <h2>Customer Information</h2>
+
+        <h:panelGrid columns="2">
+
+            <h:outputText value="Name:" />
+            <h:outputText value="#{customerDetailsController.customer.firstName} #{customerDetailsController.customer.lastName}" />
+
+            <h:outputText value="Email:" />
+            <h:outputText value="#{customerDetailsController.customer.email}" />
+
+            <h:outputText value="Phone:" />
+            <h:outputText value="#{customerDetailsController.customer.phone}" />
+
+            <h:outputText value="Address:" />
+            <h:outputText value="#{customerDetailsController.customer.address}" />
+
+        </h:panelGrid>
+
+        <h2>Customer Orders</h2>
+
+        <h:dataTable value="#{customerDetailsController.customer.orders}"
+                     var="order"
+                     border="1">
+
+            <h:column>
+                <f:facet name="header">Order ID</f:facet>
+                <h:outputText value="#{order.id}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Product</f:facet>
+                <h:outputText value="#{order.product.brand} #{order.product.model}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Quantity</f:facet>
+                <h:outputText value="#{order.quantity}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Order Date</f:facet>
+                <h:outputText value="#{order.orderDate}" />
+            </h:column>
+
+        </h:dataTable>
+
+    </h:panelGroup>
+
+</h:body>
+</html>
