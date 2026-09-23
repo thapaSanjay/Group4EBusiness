@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+<h:head>
+    <title>User Registration</title>
+</h:head>
+
+<h:body>
+
+    <h1>User Registration</h1>
+
+    <h:form>
+
+        <h:messages style="color:red" />
+
+        <h:panelGrid columns="2">
+
+            <h:outputLabel value="First Name:" />
+            <h:inputText value="#{registrationController.firstName}"
+                         required="true" />
+
+            <h:outputLabel value="Last Name:" />
+            <h:inputText value="#{registrationController.lastName}"
+                         required="true" />
+
+            <h:outputLabel value="Username:" />
+            <h:inputText value="#{registrationController.username}"
+                         required="true" />
+
+            <h:outputLabel value="Email:" />
+            <h:inputText value="#{registrationController.email}"
+                         required="true" />
+
+            <h:outputLabel value="Password:" />
+            <h:inputSecret value="#{registrationController.password}"
+                           required="true" />
+
+        </h:panelGrid>
+
+        <br />
+
+        <h:commandButton value="Register"
+                         action="#{registrationController.register}" />
+
+    </h:form>
+
+</h:body>
+</html>

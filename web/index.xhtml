@@ -1,11 +1,58 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
+
+<h:head>
+    <title>Group 4 e-Business System</title>
+</h:head>
+
+<h:body>
+
+    <h1>Group 4 e-Business System</h1>
+
+    <h:panelGroup rendered="#{not empty sessionScope.loggedInUser}">
+        <p>
+            Welcome,
+            <strong>
+                #{sessionScope.loggedInUser.firstName}
+                #{sessionScope.loggedInUser.lastName}
+            </strong>
+        </p>
+    </h:panelGroup>
+
+    <h:form>
+
+        <h:commandButton value="Product Management"
+                         action="products?faces-redirect=true" />
+
+        <br /><br />
+
+        <h:commandButton value="Customer Management"
+                         action="customers?faces-redirect=true" />
+
+        <br /><br />
+
+        <h:commandButton value="Order Management"
+                         action="orders?faces-redirect=true" />
+
+        <br /><br />
+
+        <h:commandButton value="Search"
+                         action="search?faces-redirect=true" />
+
+        <br /><br />
+
+        <h:commandButton value="Customer Details"
+                         action="customerDetails?faces-redirect=true" />
+
+        <br /><br />
+
+        <h:commandButton value="Logout"
+                         action="#{loginController.logout}" />
+
+    </h:form>
+
+</h:body>
 </html>
