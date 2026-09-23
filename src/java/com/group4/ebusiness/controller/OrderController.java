@@ -8,6 +8,8 @@ import com.group4.ebusiness.entity.CustomerOrder;
 import com.group4.ebusiness.entity.Product;
 import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,26 +29,122 @@ public class OrderController {
 
     private Long customerId;
     private Long productId;
-    private int quantity;
+    private Integer quantity;
 
     public String createOrder() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (customerId == null) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "Please select a customer."
+                    )
+            );
+            return null;
+        }
+
+        if (productId == null) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "Please select a product."
+                    )
+            );
+            return null;
+        }
+
+        if (quantity == null || quantity <= 0) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "Quantity must be greater than 0."
+                    )
+            );
+            return null;
+        }
 
         Customer customer = customerEJB.findCustomerById(customerId);
         Product product = productEJB.findProductById(productId);
 
-        if (customer == null || product == null) {
+        if (customer == null) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "Selected customer was not found."
+                    )
+            );
             return null;
         }
 
-        CustomerOrder order = new CustomerOrder();
-        order.setCustomer(customer);
-        order.setProduct(product);
-        order.setQuantity(quantity);
-        order.setOrderDate(LocalDateTime.now());
+        if (product == null) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "Selected product was not found."
+                    )
+            );
+            return null;
+        }
 
-        orderEJB.createOrder(order);
+        if (quantity > product.getStockQuantity()) {
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed. Insufficient stock. Available quantity: "
+                                    + product.getStockQuantity(),
+                            null
+                    )
+            );
+            return null;
+        }
 
-        return "orders?faces-redirect=true";
+        try {
+
+            CustomerOrder order = new CustomerOrder();
+            order.setCustomer(customer);
+            order.setProduct(product);
+            order.setQuantity(quantity);
+            order.setOrderDate(LocalDateTime.now());
+
+            orderEJB.createOrder(order);
+
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_INFO,
+                            "Order created",
+                            "The order was created successfully."
+                    )
+            );
+
+            return "orders?faces-redirect=true";
+
+        } catch (Exception e) {
+
+            context.addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            "Order failed",
+                            "The order could not be created."
+                    )
+            );
+
+            return null;
+        }
     }
 
     public String deleteOrder(Long id) {
@@ -82,11 +180,11 @@ public class OrderController {
         this.productId = productId;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

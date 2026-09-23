@@ -1,5 +1,6 @@
 package com.group4.ebusiness.controller;
 
+import jakarta.ejb.EJBException;
 import com.group4.ebusiness.ejb.EmailService;
 import com.group4.ebusiness.ejb.UserEJB;
 import com.group4.ebusiness.entity.User;
@@ -50,11 +51,28 @@ public class RegistrationController {
                     .getSessionMap()
                     .put("registrationEmail", user.getEmail());
 
-            FacesContext.getCurrentInstance()
-                    .getExternalContext()
-                    .getSessionMap();
-
             return "verify?faces-redirect=true";
+
+       } catch (EJBException e) {
+
+            Throwable cause = e.getCause();
+
+            String message = "Registration failed.";
+
+            if (cause instanceof IllegalArgumentException) {
+                message = cause.getMessage();
+            }
+
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(
+                            FacesMessage.SEVERITY_ERROR,
+                            message,
+                            null
+                    )
+            );
+
+            return null;
 
         } catch (IllegalArgumentException e) {
 
@@ -62,8 +80,8 @@ public class RegistrationController {
                     null,
                     new FacesMessage(
                             FacesMessage.SEVERITY_ERROR,
-                            "Registration failed",
-                            e.getMessage()
+                            e.getMessage(),
+                            null
                     )
             );
 

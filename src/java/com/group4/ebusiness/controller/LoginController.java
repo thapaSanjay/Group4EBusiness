@@ -36,8 +36,8 @@ public class LoginController {
                 null,
                 new FacesMessage(
                         FacesMessage.SEVERITY_ERROR,
-                        "Login failed",
-                        "Invalid username/password or account not verified."
+                        "Invalid username/password or account not verified.",
+                        null
                 )
         );
 

@@ -15,40 +15,115 @@
 
     <h:form id="productForm">
 
-        <h:messages style="color:red" />
+        <h:messages
+            errorStyle="color:red"
+            infoStyle="color:green"
+            showSummary="true"
+            showDetail="false" />
 
         <h:panelGrid columns="2">
 
-            <h:outputLabel value="Product Type:" />
-            <h:selectOneMenu value="#{productController.productType}" required="true">
-                <f:selectItem itemLabel="Select Type" itemValue="" />
-                <f:selectItem itemLabel="Laptop" itemValue="Laptop" />
-                <f:selectItem itemLabel="Smartphone" itemValue="Smartphone" />
+            <h:outputLabel value="Product Type:" for="productType" />
+
+            <h:selectOneMenu id="productType"
+                             value="#{productController.productType}"
+                             required="true"
+                             requiredMessage="Please select a product type.">
+
+                <f:selectItem itemLabel="Select Type"
+                              itemValue="#{null}"
+                              noSelectionOption="true" />
+
+                <f:selectItem itemLabel="Laptop"
+                              itemValue="Laptop" />
+
+                <f:selectItem itemLabel="Smartphone"
+                              itemValue="Smartphone" />
+
             </h:selectOneMenu>
 
-            <h:outputLabel value="Brand:" />
-            <h:inputText value="#{productController.brand}" required="true" />
 
-            <h:outputLabel value="Model:" />
-            <h:inputText value="#{productController.model}" required="true" />
+            <h:outputLabel value="Brand:" for="brand" />
 
-            <h:outputLabel value="Display Size:" />
-            <h:inputText value="#{productController.displaySize}" required="true" />
+            <h:inputText id="brand"
+                         value="#{productController.brand}"
+                         required="true"
+                         requiredMessage="Brand is required." />
 
-            <h:outputLabel value="Weight:" />
-            <h:inputText value="#{productController.weight}" required="true" />
 
-            <h:outputLabel value="Operating System:" />
-            <h:inputText value="#{productController.operatingSystem}" />
+            <h:outputLabel value="Model:" for="model" />
 
-            <h:outputLabel value="Camera:" />
-            <h:inputText value="#{productController.camera}" />
+            <h:inputText id="model"
+                         value="#{productController.model}"
+                         required="true"
+                         requiredMessage="Model is required." />
 
-            <h:outputLabel value="WiFi:" />
-            <h:inputText value="#{productController.wifi}" />
 
-            <h:outputLabel value="Stock Quantity:" />
-            <h:inputText value="#{productController.stockQuantity}" required="true" />
+            <h:outputLabel value="Display Size:" for="displaySize" />
+
+            <h:inputText id="displaySize"
+                         value="#{productController.displaySize}"
+                         required="true"
+                         requiredMessage="Display size is required."
+                         converterMessage="Display size must be a number."
+                         validatorMessage="Display size must be greater than 0.">
+
+                <f:validateDoubleRange minimum="0.1" />
+
+            </h:inputText>
+
+
+            <h:outputLabel value="Weight:" for="weight" />
+
+            <h:inputText id="weight"
+                         value="#{productController.weight}"
+                         required="true"
+                         requiredMessage="Weight is required."
+                         converterMessage="Weight must be a number."
+                         validatorMessage="Weight must be greater than 0.">
+
+                <f:validateDoubleRange minimum="0.1" />
+
+            </h:inputText>
+
+
+            <h:outputLabel value="Operating System:" for="os" />
+
+            <h:inputText id="os"
+                         value="#{productController.operatingSystem}"
+                         required="true"
+                         requiredMessage="Operating system is required." />
+
+
+            <h:outputLabel value="Camera:" for="camera" />
+
+            <h:inputText id="camera"
+                         value="#{productController.camera}"
+                         required="true"
+                         requiredMessage="Camera information is required." />
+
+
+            <h:outputLabel value="WiFi:" for="wifi" />
+
+            <h:inputText id="wifi"
+                         value="#{productController.wifi}"
+                         required="true"
+                         requiredMessage="WiFi information is required." />
+
+
+            <h:outputLabel value="Stock Quantity:" for="stock" />
+
+            <h:inputText id="stock"
+                         value="#{productController.stockQuantity}"
+                         required="true"
+                         requiredMessage="Stock quantity is required."
+                         converterMessage="Stock quantity must be a whole number."
+                         validatorMessage="Stock quantity cannot be negative.">
+
+                <f:validateLongRange minimum="0" />
+
+            </h:inputText>
+
 
             <h:outputLabel value="Network Interface:" />
             <h:inputText value="#{productController.networkInterface}" />

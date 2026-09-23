@@ -13,34 +13,65 @@
 
     <h1>Order Management</h1>
 
+    <!-- CREATE ORDER FORM -->
     <h:form id="orderForm">
 
-        <h:messages style="color:red" />
+        <h:messages
+            errorStyle="color:red"
+            infoStyle="color:green"
+            showSummary="true"
+            showDetail="false" />
 
         <h:panelGrid columns="2">
 
-            <h:outputLabel value="Customer:" />
-            <h:selectOneMenu value="#{orderController.customerId}" required="true">
-                <f:selectItem itemLabel="Select Customer" itemValue="" />
+            <h:outputLabel value="Customer:" for="customer" />
+
+            <h:selectOneMenu id="customer"
+                             value="#{orderController.customerId}"
+                             required="true"
+                             requiredMessage="Please select a customer.">
+
+                <f:selectItem itemLabel="Select Customer"
+                              itemValue="#{null}"
+                              noSelectionOption="true" />
+
                 <f:selectItems value="#{orderController.customers}"
                                var="customer"
                                itemValue="#{customer.id}"
                                itemLabel="#{customer.firstName} #{customer.lastName}" />
+
             </h:selectOneMenu>
 
-            <h:outputLabel value="Product:" />
-            <h:selectOneMenu value="#{orderController.productId}" required="true">
-                <f:selectItem itemLabel="Select Product" itemValue="" />
+            <h:outputLabel value="Product:" for="product" />
+
+            <h:selectOneMenu id="product"
+                             value="#{orderController.productId}"
+                             required="true"
+                             requiredMessage="Please select a product.">
+
+                <f:selectItem itemLabel="Select Product"
+                              itemValue="#{null}"
+                              noSelectionOption="true" />
+
                 <f:selectItems value="#{orderController.products}"
                                var="product"
                                itemValue="#{product.id}"
                                itemLabel="#{product.brand} #{product.model} - Stock: #{product.stockQuantity}" />
+
             </h:selectOneMenu>
 
-            <h:outputLabel value="Quantity:" />
-            <h:inputText value="#{orderController.quantity}"
-                         required="true"
-                         requiredMessage="Quantity is required." />
+            <h:outputLabel value="Quantity:" for="quantity" />
+
+            <h:inputText id="quantity"
+                        value="#{orderController.quantity}"
+                        required="true"
+                        requiredMessage="Quantity is required."
+                        converterMessage="Quantity must be a whole number."
+                        validatorMessage="Quantity must be at least 1.">
+
+               <f:validateLongRange minimum="1" />
+
+            </h:inputText>
 
         </h:panelGrid>
 
@@ -55,6 +86,7 @@
 
     <h2>Order List</h2>
 
+    <!-- ORDER LIST FORM -->
     <h:form id="orderListForm">
 
         <h:dataTable value="#{orderController.orders}"

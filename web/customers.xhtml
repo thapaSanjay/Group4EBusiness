@@ -15,32 +15,61 @@
 
     <h:form id="customerForm">
 
-        <h:messages style="color:red" />
+        <h:messages
+            errorStyle="color:red"
+            infoStyle="color:green"
+            showSummary="true"
+            showDetail="false" />
 
         <h:panelGrid columns="2">
 
-            <h:outputLabel value="First Name:" />
-            <h:inputText value="#{customerController.firstName}"
+            <h:outputLabel value="First Name:" for="firstName" />
+
+            <h:inputText id="firstName"
+                         value="#{customerController.firstName}"
                          required="true"
                          requiredMessage="First name is required." />
 
-            <h:outputLabel value="Last Name:" />
-            <h:inputText value="#{customerController.lastName}"
+
+            <h:outputLabel value="Last Name:" for="lastName" />
+
+            <h:inputText id="lastName"
+                         value="#{customerController.lastName}"
                          required="true"
                          requiredMessage="Last name is required." />
 
-            <h:outputLabel value="Email:" />
-            <h:inputText value="#{customerController.email}"
-                         required="true"
-                         requiredMessage="Email is required." />
 
-            <h:outputLabel value="Phone:" />
-            <h:inputText value="#{customerController.phone}"
-                         required="true"
-                         requiredMessage="Phone is required." />
+            <h:outputLabel value="Email:" for="email" />
 
-            <h:outputLabel value="Address:" />
-            <h:inputText value="#{customerController.address}"
+            <h:inputText id="email"
+                         value="#{customerController.email}"
+                         required="true"
+                         requiredMessage="Email is required."
+                         validatorMessage="Please enter a valid email address.">
+
+                <f:validateRegex
+                    pattern="^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$" />
+
+            </h:inputText>
+
+
+            <h:outputLabel value="Phone:" for="phone" />
+
+            <h:inputText id="phone"
+                         value="#{customerController.phone}"
+                         required="true"
+                         requiredMessage="Phone number is required."
+                         validatorMessage="Please enter a valid phone number.">
+
+                <f:validateRegex pattern="^[0-9 +()-]{8,20}$" />
+
+            </h:inputText>
+
+
+            <h:outputLabel value="Address:" for="address" />
+
+            <h:inputText id="address"
+                         value="#{customerController.address}"
                          required="true"
                          requiredMessage="Address is required." />
 
