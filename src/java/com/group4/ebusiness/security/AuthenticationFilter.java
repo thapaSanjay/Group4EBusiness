@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
+    "/index.xhtml",
     "/products.xhtml",
     "/customers.xhtml",
     "/orders.xhtml",
