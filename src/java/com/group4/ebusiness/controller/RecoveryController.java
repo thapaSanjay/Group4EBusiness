@@ -50,9 +50,24 @@ public class RecoveryController {
         );
 
         FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getSessionMap()
-                .put("recoveryEmail", user.getEmail());
+            .getExternalContext()
+            .getSessionMap()
+            .put("recoveryEmail", user.getEmail());
+        
+        FacesContext.getCurrentInstance()
+            .getExternalContext()
+            .getSessionMap()
+            .put("recoveryFirstName", user.getFirstName());
+
+        FacesContext.getCurrentInstance()
+            .getExternalContext()
+            .getSessionMap()
+            .put("recoveryLastName", user.getLastName());
+
+        FacesContext.getCurrentInstance()
+            .getExternalContext()
+            .getSessionMap()
+            .put("recoveryUsername", user.getUsername());
 
         return "resetPassword?faces-redirect=true";
     }
@@ -79,8 +94,20 @@ public class RecoveryController {
         if (success) {
 
             context.getExternalContext()
-                    .getSessionMap()
-                    .remove("recoveryEmail");
+                .getSessionMap()
+                .remove("recoveryEmail");
+            
+            context.getExternalContext()
+                .getSessionMap()
+                .remove("recoveryFirstName");
+
+            context.getExternalContext()
+                .getSessionMap()
+                .remove("recoveryLastName");
+
+            context.getExternalContext()
+                .getSessionMap()
+                .remove("recoveryUsername");
 
             return "login?faces-redirect=true";
         }
