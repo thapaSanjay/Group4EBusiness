@@ -1,5 +1,6 @@
 package com.group4.ebusiness.controller;
 
+import com.group4.ebusiness.ejb.EmailService;
 import com.group4.ebusiness.ejb.UserEJB;
 import com.group4.ebusiness.entity.User;
 import jakarta.ejb.EJB;
@@ -14,6 +15,9 @@ public class RegistrationController {
 
     @EJB
     private UserEJB userEJB;
+    
+    @EJB
+    private EmailService emailService;
 
     private String firstName;
     private String lastName;
@@ -31,6 +35,15 @@ public class RegistrationController {
                     email,
                     password
             );
+            
+            emailService.sendEmail(
+                user.getEmail(),
+                "Group 4 e-Business Registration Verification",
+                "Hello " + user.getFirstName()
+                + ",\n\nYour verification code is: "
+                + user.getVerificationCode()
+                + "\n\nPlease use this code to complete your registration."
+            );
 
             FacesContext.getCurrentInstance()
                     .getExternalContext()
@@ -39,8 +52,7 @@ public class RegistrationController {
 
             FacesContext.getCurrentInstance()
                     .getExternalContext()
-                    .getSessionMap()
-                    .put("verificationCode", user.getVerificationCode());
+                    .getSessionMap();
 
             return "verify?faces-redirect=true";
 
