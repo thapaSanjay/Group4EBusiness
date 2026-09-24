@@ -1,5 +1,7 @@
 package com.group4.ebusiness.entity;
 
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,18 @@ import jakarta.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQueries({
+    @NamedQuery(
+        name = "Product.findAll",
+        query = "SELECT p FROM Product p"
+    ),
+    @NamedQuery(
+        name = "Product.searchByKeyword",
+        query = "SELECT p FROM Product p "
+              + "WHERE LOWER(p.brand) LIKE LOWER(:keyword) "
+              + "OR LOWER(p.model) LIKE LOWER(:keyword)"
+    )
+})
 public class Product {
 
     @Id

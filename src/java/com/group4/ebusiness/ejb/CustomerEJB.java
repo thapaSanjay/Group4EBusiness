@@ -21,8 +21,8 @@ public class CustomerEJB {
     }
 
     public List<Customer> findAllCustomers() {
-        return em.createQuery(
-                "SELECT c FROM Customer c",
+        return em.createNamedQuery(
+                "Customer.findAll",
                 Customer.class
         ).getResultList();
     }
@@ -41,11 +41,8 @@ public class CustomerEJB {
     
     public List<Customer> searchCustomers(String keyword) {
 
-        return em.createQuery(
-                "SELECT c FROM Customer c "
-                + "WHERE LOWER(c.firstName) LIKE LOWER(:keyword) "
-                + "OR LOWER(c.lastName) LIKE LOWER(:keyword) "
-                + "OR LOWER(c.email) LIKE LOWER(:keyword)",
+        return em.createNamedQuery(
+                "Customer.searchByKeyword",
                 Customer.class
         )
         .setParameter("keyword", "%" + keyword + "%")
@@ -53,10 +50,8 @@ public class CustomerEJB {
     }
     
     public Customer findCustomerWithOrders(Long id) {
-        return em.createQuery(
-                "SELECT DISTINCT c FROM Customer c "
-                + "LEFT JOIN FETCH c.orders "
-                + "WHERE c.id = :id",
+        return em.createNamedQuery(
+                "Customer.findWithOrders",
                 Customer.class
         )
         .setParameter("id", id)

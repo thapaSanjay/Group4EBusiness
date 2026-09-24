@@ -51,8 +51,8 @@ public class OrderEJB {
     }
 
     public List<CustomerOrder> findAllOrders() {
-        return em.createQuery(
-                "SELECT o FROM CustomerOrder o",
+        return em.createNamedQuery(
+                "CustomerOrder.findAll",
                 CustomerOrder.class
         ).getResultList();
     }

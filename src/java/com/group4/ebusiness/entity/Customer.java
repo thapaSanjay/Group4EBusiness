@@ -1,5 +1,7 @@
 package com.group4.ebusiness.entity;
 
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name = "Customer.findAll",
+        query = "SELECT c FROM Customer c"
+    ),
+    @NamedQuery(
+        name = "Customer.searchByKeyword",
+        query = "SELECT c FROM Customer c "
+              + "WHERE LOWER(c.firstName) LIKE LOWER(:keyword) "
+              + "OR LOWER(c.lastName) LIKE LOWER(:keyword) "
+              + "OR LOWER(c.email) LIKE LOWER(:keyword)"
+    ),
+    @NamedQuery(
+        name = "Customer.findWithOrders",
+        query = "SELECT DISTINCT c FROM Customer c "
+              + "LEFT JOIN FETCH c.orders "
+              + "WHERE c.id = :id"
+    )
+})
 public class Customer {
 
     @Id

@@ -21,8 +21,8 @@ public class ProductEJB {
     }
 
     public List<Product> findAllProducts() {
-        return em.createQuery(
-                "SELECT p FROM Product p",
+        return em.createNamedQuery(
+                "Product.findAll",
                 Product.class
         ).getResultList();
     }
@@ -41,10 +41,8 @@ public class ProductEJB {
     
     public List<Product> searchProducts(String keyword) {
 
-        return em.createQuery(
-                "SELECT p FROM Product p "
-                + "WHERE LOWER(p.brand) LIKE LOWER(:keyword) "
-                + "OR LOWER(p.model) LIKE LOWER(:keyword)",
+        return em.createNamedQuery(
+                "Product.searchByKeyword",
                 Product.class
         )
         .setParameter("keyword", "%" + keyword + "%")

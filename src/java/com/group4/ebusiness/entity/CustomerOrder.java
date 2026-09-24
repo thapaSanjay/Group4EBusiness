@@ -1,5 +1,7 @@
 package com.group4.ebusiness.entity;
 
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,6 +11,12 @@ import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name = "CustomerOrder.findAll",
+        query = "SELECT o FROM CustomerOrder o"
+    )
+})
 public class CustomerOrder {
 
     @Id
