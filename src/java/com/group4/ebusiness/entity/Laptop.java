@@ -3,6 +3,10 @@ package com.group4.ebusiness.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
+/**
+ * JPA entity representing a laptop product.
+ * Adds laptop-specific properties to the common Product fields.
+ */
 @Entity
 @PrimaryKeyJoinColumn(name = "product_id")
 public class Laptop extends Product {
@@ -11,9 +15,14 @@ public class Laptop extends Product {
     private String hardDrive;
     private String opticalDrive;
 
+    //No args constructor
     public Laptop() {
     }
 
+    /**
+    * Creates a laptop using common product properties
+    * and laptop-specific hardware information.
+    */
     public Laptop(String brand, String model, double displaySize,
                   double weight, String operatingSystem,
                   String camera, String wifi, int stockQuantity,

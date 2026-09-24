@@ -4,8 +4,17 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Utility class providing secure password hashing for the application.
+ */
 public class PasswordUtil {
 
+    /**
+    * Generates a SHA-512 hexadecimal hash of a plain-text password.
+    *
+    * @param password plain-text password entered by the user
+    * @return SHA-512 hexadecimal password hash
+    */
     public static String hashPassword(String password) {
 
         try {

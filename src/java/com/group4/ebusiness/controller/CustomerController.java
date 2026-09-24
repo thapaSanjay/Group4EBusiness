@@ -7,6 +7,10 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.util.List;
 
+/**
+ * JSF backing bean for customer management.
+ * Handles customer creation and retrieves customer records for the user interface.
+ */
 @Named
 @RequestScoped
 public class CustomerController {
@@ -20,6 +24,10 @@ public class CustomerController {
     private String phone;
     private String address;
 
+    /**
+    * Creates a new customer using the information entered on the JSF page.
+    * The customer is persisted through CustomerEJB.
+    */
     public String createCustomer() {
 
         Customer customer = new Customer(
@@ -35,6 +43,9 @@ public class CustomerController {
         return "customers?faces-redirect=true";
     }
 
+    /**
+    * Retrieves all customers for display on the Customer Management page.
+    */
     public List<Customer> getCustomers() {
         return customerEJB.findAllCustomers();
     }

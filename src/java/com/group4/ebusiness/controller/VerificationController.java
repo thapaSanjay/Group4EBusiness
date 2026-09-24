@@ -7,6 +7,9 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
+/**
+ * Handles verification of newly registered user accounts.
+ */
 @Named
 @RequestScoped
 public class VerificationController {
@@ -16,6 +19,10 @@ public class VerificationController {
 
     private String code;
 
+    /**
+    * Checks the verification code against the code stored for
+    * the registered account and activates the account when valid.
+    */
     public String verify() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -40,6 +47,7 @@ public class VerificationController {
 
         boolean verified = userEJB.verifyUser(email, code);
 
+        // Registration information is no longer required after successful verification.
         if (verified) {
 
             context.getExternalContext()

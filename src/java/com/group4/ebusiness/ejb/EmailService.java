@@ -9,14 +9,29 @@ import jakarta.mail.internet.MimeMessage;
 
 import java.util.Properties;
 
+/**
+ * Stateless email service used for registration verification
+ * and password recovery messages.
+ *
+ * Emails are sent to the local FakeSMTP server during development
+ * and assignment demonstration.
+ */
 @Stateless
 public class EmailService {
 
+    /**
+    * Sends a plain-text email using the local SMTP server.
+    *
+    * @param recipient destination email address
+    * @param subject email subject
+    * @param body email message content
+    */
     public void sendEmail(String recipient,
                           String subject,
                           String body) {
 
         try {
+            // Configure Jakarta Mail to communicate with FakeSMTP on localhost.
             Properties properties = new Properties();
 
             properties.put("mail.smtp.host", "localhost");
@@ -40,6 +55,7 @@ public class EmailService {
             message.setSubject(subject);
             message.setText(body);
 
+            // Send the completed message to the configured SMTP server.
             Transport.send(message);
 
         } catch (Exception e) {

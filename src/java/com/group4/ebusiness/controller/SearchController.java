@@ -11,6 +11,10 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.util.List;
 
+/**
+ * Backing bean for the system search functions.
+ * Supports product, customer and order searches.
+ */
 @Named
 @RequestScoped
 public class SearchController {
@@ -32,14 +36,23 @@ public class SearchController {
     private List<Customer> customerResults;
     private CustomerOrder orderResult;
 
+    /**
+    * Searches products by brand or model keyword.
+    */
     public void searchProducts() {
         productResults = productEJB.searchProducts(productKeyword);
     }
 
+    /**
+    * Searches customers by name or email keyword.
+    */
     public void searchCustomers() {
         customerResults = customerEJB.searchCustomers(customerKeyword);
     }
 
+    /**
+    * Searches for an order using its unique order ID.
+    */
     public void searchOrder() {
         orderResult = orderEJB.searchOrder(orderId);
     }

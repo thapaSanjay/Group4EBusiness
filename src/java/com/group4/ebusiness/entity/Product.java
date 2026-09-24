@@ -9,6 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 
+/**
+ * Base JPA entity containing properties shared by all products.
+ * Laptop and Smartphone inherit from this entity using the
+ * JOINED inheritance strategy.
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
@@ -38,9 +43,14 @@ public class Product {
     private String wifi;
     private int stockQuantity;
 
+    //No args constructor
     public Product() {
     }
 
+    /**
+    * Creates a product with the common properties shared by
+    * laptops and smartphones.
+    */
     public Product(String brand, String model, double displaySize,
                    double weight, String operatingSystem,
                    String camera, String wifi, int stockQuantity) {

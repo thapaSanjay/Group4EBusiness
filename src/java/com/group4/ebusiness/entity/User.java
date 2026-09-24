@@ -8,6 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 
+/**
+ * JPA entity representing a registered application user.
+ * Stores authentication, verification and recovery information.
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(

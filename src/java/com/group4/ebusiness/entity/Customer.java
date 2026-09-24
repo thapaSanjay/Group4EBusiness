@@ -11,6 +11,10 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JPA entity containing customer contact information.
+ * A customer can be associated with multiple orders.
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(
@@ -43,6 +47,7 @@ public class Customer {
     private String phone;
     private String address;
 
+    // One customer may place multiple orders.
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<CustomerOrder> orders = new ArrayList<>();
 

@@ -3,6 +3,10 @@ package com.group4.ebusiness.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 
+/**
+ * JPA entity representing a smartphone product.
+ * Adds mobile-specific properties to the common Product fields.
+ */
 @Entity
 @PrimaryKeyJoinColumn(name = "product_id")
 public class Smartphone extends Product {
@@ -11,9 +15,14 @@ public class Smartphone extends Product {
     private String location;
     private String simCard;
 
+    //No args constructor
     public Smartphone() {
     }
 
+    /**
+    * Creates a smartphone using common product properties
+    * and smartphone-specific connectivity information.
+    */
     public Smartphone(String brand, String model, double displaySize,
                       double weight, String operatingSystem,
                       String camera, String wifi, int stockQuantity,

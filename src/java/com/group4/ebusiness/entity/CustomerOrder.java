@@ -10,6 +10,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
+/**
+ * JPA entity representing an individual customer order.
+ * Each order belongs to one customer and references one product.
+ */
 @Entity
 @NamedQueries({
     @NamedQuery(
@@ -27,10 +31,12 @@ public class CustomerOrder {
 
     private LocalDateTime orderDate;
 
+    // Customer who placed this order.
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    // Product purchased in this order.
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

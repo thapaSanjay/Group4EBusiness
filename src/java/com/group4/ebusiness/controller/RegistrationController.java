@@ -10,6 +10,10 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
+/**
+ * Handles new user registration.
+ * Registered users receive an email verification code before login is permitted.
+ */
 @Named
 @RequestScoped
 public class RegistrationController {
@@ -26,6 +30,10 @@ public class RegistrationController {
     private String email;
     private String password;
 
+    /**
+    * Registers a new user, sends the verification code by email
+    * and redirects the user to the verification page.
+    */
     public String register() {
 
         try {
@@ -36,7 +44,7 @@ public class RegistrationController {
                     email,
                     password
             );
-            
+            // Send the generated verification code to the user's registered email address.
             emailService.sendEmail(
                 user.getEmail(),
                 "Group 4 e-Business Registration Verification",
@@ -45,7 +53,7 @@ public class RegistrationController {
                 + user.getVerificationCode()
                 + "\n\nPlease use this code to complete your registration."
             );
-
+            // Store the registration email temporarily for the verification step.
             FacesContext.getCurrentInstance()
                     .getExternalContext()
                     .getSessionMap()
@@ -53,7 +61,9 @@ public class RegistrationController {
 
             return "verify?faces-redirect=true";
 
-       } catch (EJBException e) {
+       }
+        // Convert EJB validation errors into user-friendly JSF messages.
+        catch (EJBException e) {
 
             Throwable cause = e.getCause();
 

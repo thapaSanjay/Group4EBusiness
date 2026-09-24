@@ -14,6 +14,11 @@ import jakarta.inject.Named;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * JSF backing bean for order management.
+ * Performs presentation-layer validation and delegates
+ * order processing to OrderEJB.
+ */
 @Named
 @RequestScoped
 public class OrderController {
@@ -31,6 +36,10 @@ public class OrderController {
     private Long productId;
     private Integer quantity;
 
+    /**
+    * Validates the selected customer, product and quantity,
+    * then creates a new order through OrderEJB.
+    */
     public String createOrder() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -98,6 +107,7 @@ public class OrderController {
             return null;
         }
 
+        // Prevent an order from exceeding the currently available product stock.
         if (quantity > product.getStockQuantity()) {
             context.addMessage(
                     null,
@@ -147,19 +157,32 @@ public class OrderController {
         }
     }
 
+    /**
+    * Deletes an order through OrderEJB.
+    * OrderEJB also restores the ordered quantity to product stock.
+    */
     public String deleteOrder(Long id) {
         orderEJB.deleteOrder(id);
         return "orders?faces-redirect=true";
     }
 
+    /**
+    * Retrieves all orders for display in the order table.
+    */
     public List<CustomerOrder> getOrders() {
         return orderEJB.findAllOrders();
     }
 
+    /**
+    * Retrieves customers used in the order customer-selection menu.
+    */
     public List<Customer> getCustomers() {
         return customerEJB.findAllCustomers();
     }
 
+    /**
+    * Retrieves products used in the order product-selection menu.
+    */
     public List<Product> getProducts() {
         return productEJB.findAllProducts();
     }

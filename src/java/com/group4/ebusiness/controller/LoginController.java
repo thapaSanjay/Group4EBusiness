@@ -8,6 +8,10 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
+/**
+ * Handles user login and logout operations.
+ * A successfully authenticated user is stored in the HTTP session.
+ */
 @Named
 @RequestScoped
 public class LoginController {
@@ -18,6 +22,11 @@ public class LoginController {
     private String username;
     private String password;
 
+    /**
+    * Authenticates the supplied username and password.
+    * On success, stores the logged-in user in the session
+    * and redirects to the main dashboard.
+    */
     public String login() {
 
         User user = userEJB.login(username, password);
@@ -44,6 +53,9 @@ public class LoginController {
         return null;
     }
 
+    /**
+    * Logs out current user by invalidating the HTTP session.
+    */
     public String logout() {
 
         FacesContext.getCurrentInstance()

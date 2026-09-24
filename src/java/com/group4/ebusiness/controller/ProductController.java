@@ -9,6 +9,10 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import java.util.List;
 
+/**
+ * JSF backing bean for creating and displaying products.
+ * Supports both Laptop and Smartphone product types.
+ */
 @Named
 @RequestScoped
 public class ProductController {
@@ -37,10 +41,15 @@ public class ProductController {
     private String location;
     private String simCard;
 
+    /**
+    * Creates either a Laptop or Smartphone according to the
+    * product type selected by the user and persists it through ProductEJB.
+    */
     public String createProduct() {
 
+        
         if ("Laptop".equals(productType)) {
-
+            // Create a laptop using the common product fields and laptop-specific fields.
             Laptop laptop = new Laptop(
                     brand,
                     model,
@@ -58,7 +67,7 @@ public class ProductController {
             productEJB.createProduct(laptop);
 
         } else if ("Smartphone".equals(productType)) {
-
+            // Create a smartphone using the common product fields and phone-specific fields.
             Smartphone smartphone = new Smartphone(
                     brand,
                     model,
@@ -79,6 +88,9 @@ public class ProductController {
         return "products?faces-redirect=true";
     }
 
+    /**
+    * Retrieves all persisted products for the Product Stock table.
+    */
     public List<Product> getProducts() {
         return productEJB.findAllProducts();
     }

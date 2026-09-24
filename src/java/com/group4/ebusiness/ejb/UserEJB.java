@@ -8,6 +8,10 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import java.security.SecureRandom;
 
+/**
+ * Stateless business component for user registration,
+ * authentication, verification and account recovery.
+ */
 @Stateless
 public class UserEJB {
 
@@ -16,6 +20,11 @@ public class UserEJB {
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
+    /**
+    * Registers a new user after checking that the username and email
+    * are unique. The password is stored as a SHA-512 hash and a
+    * verification code is generated for account activation.
+    */
     public User registerUser(String firstName,
                              String lastName,
                              String username,
@@ -47,6 +56,9 @@ public class UserEJB {
         return user;
     }
 
+    /**
+    * Retrieves a user by username using the User.findByUsername named query.
+    */
     public User findByUsername(String username) {
         try {
             return em.createNamedQuery("User.findByUsername", User.class)
@@ -58,6 +70,9 @@ public class UserEJB {
         }
     }
 
+    /**
+    * Retrieves a user by registered email address.
+    */
     public User findByEmail(String email) {
         try {
             return em.createNamedQuery("User.findByEmail", User.class)
@@ -68,7 +83,10 @@ public class UserEJB {
             return null;
         }
     }
-
+    
+    /**
+     * Verifies a user account when the supplied verification code matches.
+     */
     public boolean verifyUser(String email, String code) {
 
         User user = findByEmail(email);
@@ -91,6 +109,10 @@ public class UserEJB {
         return false;
     }
 
+    /**
+    * Authenticates a verified account by comparing the hashed
+    * supplied password with the stored password hash.
+    */
     public User login(String username, String password) {
 
         User user = findByUsername(username);
@@ -108,6 +130,10 @@ public class UserEJB {
         return null;
     }
 
+    /**
+    * Generates and stores a temporary recovery code for the
+    * account associated with the supplied email address.
+    */
     public User createRecoveryCode(String email) {
 
         User user = findByEmail(email);
@@ -123,6 +149,10 @@ public class UserEJB {
         return user;
     }
 
+    /**
+    * Resets the user's password after validating the recovery code.
+    * The new password is stored as a SHA-512 hash.
+    */
     public boolean resetPassword(String email,
                                  String recoveryCode,
                                  String newPassword) {
@@ -150,6 +180,9 @@ public class UserEJB {
         return false;
     }
 
+    /**
+    * Generates a random six-digit verification or recovery code.
+    */
     private String generateCode() {
         int code = 100000 + RANDOM.nextInt(900000);
         return String.valueOf(code);

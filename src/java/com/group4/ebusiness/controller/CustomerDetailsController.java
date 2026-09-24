@@ -6,6 +6,10 @@ import jakarta.ejb.EJB;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 
+/**
+ * Backing bean used to retrieve and display a customer together
+ * with the orders associated with that customer.
+ */
 @Named
 @RequestScoped
 public class CustomerDetailsController {
@@ -16,6 +20,9 @@ public class CustomerDetailsController {
     private Long customerId;
     private Customer customer;
 
+    /**
+    * Loads the selected customer and related orders using the customer ID.
+    */
     public void loadCustomer() {
         if (customerId != null) {
             customer = customerEJB.findCustomerWithOrders(customerId);
